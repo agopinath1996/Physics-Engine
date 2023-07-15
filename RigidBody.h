@@ -1,23 +1,24 @@
 #pragma once
-namespace RigidBody
+namespace Bodies
 {
 template<typename T>
 struct RigidBody
 {
     T mass;
     T mass_inverse;
-    Eigen::Matrix<T,3,3> m_localInverseInertiaTensor;
-    Eigen::Matrix<T,3,3> m_globalInverseInertiaTensor;
-    Eigen::Vector3d m_globalCentroid;
-    Eigen::Vector3d m_localCentroid;
+    Matrix3<T> m_localInverseInertiaTensor;
+    Matrix3<T> m_globalInverseInertiaTensor;
+    Vector3<T> m_globalCentroid;
+    Vector3<T> m_localCentroid;
 
-    Eigen::Vector3d m_position;
-    Eigen::Matrix<T,3,3> m_orientation;
-    Eigen::Vector3d m_linearVelocity;
-    Eigen::Vector3d m_angularVelocity;
+    //World frame
+    Vector3<T> m_position;  
+    Matrix3<T> m_orientation;
+    Vector3<T> m_linearVelocity;
+    Vector3<T> m_angularVelocity;
 
-    Eigen::Vector3d m_forceAccumulator;
-    Eigen::Vector3d m_torqueAccumulator;
+    Vector3<T> m_forceAccumulator;
+    Vector3<T> m_torqueAccumulator;
 
     ColliderList m_colliders;
 
@@ -28,11 +29,29 @@ struct RigidBody
 
     void AddCollider(Collider &collider);
 
-    const Eigen::Vector3d LocalToGlobal(const Eigen::Vector3d &p) const;
-    const Eigen::Vector3d GlobalToLocal(const Eigen::Vector3d &p) const;
-    const Eigen::Vector3d LocalToGlobalVec(const Eigen::Vector3d &v) const;
-    const Eigen::Vector3d GlobalToLocalVec(const Eigen::Vector3d &v) const;
+    const Vector3<T> LocalToGlobal(const Vector3<T> &p) const;
+    const Vector3<T> GlobalToLocal(const Vector3<T> &p) const;
+    const Vector3<T> LocalToGlobalVec(const Vector3<T> &v) const;
+    const Vector3<T> GlobalToLocalVec(const Vector3<T> &v) const;
 
-    void ApplyForce(const Eigen::Vector3d &f, const Eigen::Vector3d &at);
+    void ApplyForce(const Vector3<T> &f, const Vector3<T> &at);
 };
+
+template<typename T>
+void RigidBody<T>::UpdateGlobalCentroidFromPosition(void)
+{
+  m_globalCentroid = 
+    m_orientation * m_localCentroid + m_position;
+}
+ 
+template<typename T>
+void RigidBody<T>::UpdatePositionFromGlobalCentroid(void)
+{
+  m_position = 
+    m_orientation * (-m_localCentroid) + m_globalCentroid;
+}
+
+
+
+
 }
