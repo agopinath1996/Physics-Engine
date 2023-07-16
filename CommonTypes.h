@@ -18,3 +18,9 @@ using Vector4 = Eigen::Matrix<T,4,1>;
 template<typename T>
 using MatrixDynamic = Eigen::Matrix<T,Eigen::Dynamic,Eigen::Dynamic>;
 
+template<typename T>
+const Eigen::Matrix<T,3,3> Identity3 = Eigen::Matrix<T,3,3>::Identity();
+
+template<typename T>
+const Eigen::Matrix<T,4,4> Identity4 = Eigen::Matrix<T,4,4>::Identity();
+
