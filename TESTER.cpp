@@ -1,6 +1,6 @@
 #include "CommonTypes.h"
 #include<iostream>
-#include"RigidBody.h"
+#include "SimulationCommon.h"
 int main()
 {
     std::cout<<"\nHello Nuts";

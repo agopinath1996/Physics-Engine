@@ -1,5 +1,7 @@
 #pragma once
 #include<vector>
+#include "CommonTypes.h"
+
 namespace Bodies
 {
 
@@ -25,9 +27,10 @@ struct RigidBody
     Vector3<T> m_globalCentroid;
     Vector3<T> m_localCentroid;
 
-    //World frame
+    // World Frame
     Vector3<T> m_position;  
     Matrix3<T> m_orientation;
+    Matrix3<T> m_inverseOrientation;
     Vector3<T> m_linearVelocity;
     Vector3<T> m_angularVelocity;
 
@@ -43,8 +46,8 @@ struct RigidBody
 
     void AddCollider(Collider<T> &collider);
 
-    const Vector3<T> LocalToGlobal(const Vector3<T> &p) const;
-    const Vector3<T> GlobalToLocal(const Vector3<T> &p) const;
+    const Vector3<T> LocalToGlobal(const Vector3<T> &local) const;
+    const Vector3<T> GlobalToLocal(const Vector3<T> &global) const;
     const Vector3<T> LocalToGlobalVec(const Vector3<T> &v) const;
     const Vector3<T> GlobalToLocalVec(const Vector3<T> &v) const;
 
@@ -112,4 +115,31 @@ void RigidBody<T>::AddCollider(Collider<T> &collider)
   // compute inverse inertia tensor
   m_localInverseInertiaTensor = localInertiaTensor.inverse();
 }
+
+template<typename T>
+const Vector3<T> RigidBody<T>::LocalToGlobal(const Vector3<T> &local) const
+{
+  return m_orientation * local + m_position;
+}
+
+template<typename T>
+const Vector3<T> RigidBody<T>::GlobalToLocal(const Vector3<T> &global) const
+{
+  return m_inverseOrientation * (global - m_position);
+}
+
+template<typename T>
+const Vector3<T> RigidBody<T>::LocalToGlobalVec(const Vector3<T> &v) const
+{
+  return m_orientation * v;
+}
+
+template<typename T>
+const Vector3<T> RigidBody<T>::GlobalToLocalVec(const Vector3<T> &v) const
+{
+  return m_inverseOrientation * v;
+}
+
+
+
 }
