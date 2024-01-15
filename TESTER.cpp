@@ -1,4 +1,3 @@
-#include "CommonTypes.h"
 #include<iostream>
 #include "SimulationCommon.h"
 int main()
