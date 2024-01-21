@@ -98,7 +98,6 @@ Body::ColliderPairList<T> &NSquared<T>::ComputePairs(void)
   return m_pairs;
 }
 
-/*
 template<typename T>
 Body::Collider<T>* NSquared<T>::Pick(const MathCommon::Vector3<T>& point) const
 {
@@ -110,7 +109,7 @@ Body::Collider<T>* NSquared<T>::Pick(const MathCommon::Vector3<T>& point) const
   // no collider found
   return nullptr;
 }
-
+/*
 template<typename T>
 void NSquared<T>::Query(const Body::AABB<T> &aabb, Body::ColliderList<T> &out) const
 {

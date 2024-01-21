@@ -6,7 +6,4 @@ Custom Physics Engine Implementation
 ## Simulation
 ## Rules
 
-1. Do not use the 'auto' keyworkd anywhere
-2. Maximize preallocation of memeory
-3. 
 
