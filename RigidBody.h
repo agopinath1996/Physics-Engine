@@ -2,7 +2,7 @@
 #include<utility>
 #include<list>
 #include<vector>
-#include "CommonTypes.h"
+#include "CommonMathTypes.h"
 
 namespace Body
 {
@@ -16,7 +16,6 @@ struct Collider
   MathCommon::Vector3<T> m_localCentroid;
  
   //TODO: Geometrical collider properties
-
 };
 
 template<typename T>
@@ -41,7 +40,7 @@ template <typename T>
 struct ResultEntry
 {
   Collider<T> *collider;
-  float t; // Eigen::Matrix<T,n,m> performs type promotion
+  float t; // Eigen::Matrices perform type promotion
   MathCommon::Vector3<T> normal;
 
   bool operator<(const ResultEntry &rhs) const

@@ -1,6 +1,6 @@
 #include<vector>
 #include "RigidBody.h"
-#include "CommonTypes.h"
+#include "CommonMathTypes.h"
 
 namespace Collisions
 {
@@ -56,7 +56,7 @@ class NSquared : public Broadphase<T>
     virtual Body::ColliderPairList<T>& ComputePairs(void);
     virtual Body::Collider<T>* Pick(const MathCommon::Vector3<T> &point) const;
     virtual void Query(const Body::AABB<T> &aabb, Body::ColliderList<T> &out) const;
-    virtual Body:: RayCastResult<T> RayCast(const MathCommon::Ray3<T> &ray) const;
+    virtual Body::RayCastResult<T> RayCast(const MathCommon::Ray3<T> &ray) const;
 
 };
 
@@ -117,28 +117,28 @@ void NSquared<T>::Query(const Body::AABB<T> &aabb, Body::ColliderList<T> &out) c
     if (colliderAABB->Collides(aabb))
       out.push_back(colliderAABB->collider);
 }
-/*
-template<typename T>
-RayCastResult<T> NSquared<T>::RayCast(const Ray3<T> &ray) const
+
+/*template<typename T>
+Body::RayCastResult<T> NSquared<T>::RayCast(const MathCommon::Ray3<T> &ray) const
 {
   // test AABBs for candidates
-  ColliderList<T> candidateList;
+  Body::ColliderList<T> candidateList;
   candidateList.reserve(m_aabbs.size());
 
-  for (AABB<T> &aabb : m_aabbs)
+  for (Body::AABB<T> &aabb : m_aabbs)
     if (aabb->TestRay(ray))
       candidateList.push_back(aabb->collider);
    
   // test actual colliders
-  ResultList<T> resultList;
+  Body::ResultList<T> resultList;
   resultList.reserve(candidateList.size());
 
-  for (Collider<T> *collider : candidateList)
+  for (Body::Collider<T> *collider : candidateList)
   {
     // hit point = ray.pos + t * ray.dir
     if (TestRay(collider, ray))
     {
-      ResultEntry<T> entry{ collider, t, normal };
+      Body::RayCastResult<T> entry{ collider, t, normal };
       resultList.push_back(entry);
     }
   }
@@ -146,11 +146,11 @@ RayCastResult<T> NSquared<T>::RayCast(const Ray3<T> &ray) const
   // sort the result list
   std::sort(resultList.begin(), resultList.end());
  
-  RayCastResult result;
+  Body::RayCastResult<T> result;
   if (!resultList.empty())
   {
     // the first result entry is the closest one
-    ResultEntry &entry = resultList.front();
+    Body::RayCastResult<T> &entry = resultList.front();
     result.hit = true;
     result.collider = entry.collider;
     result.t = entry.t;
@@ -161,6 +161,6 @@ RayCastResult<T> NSquared<T>::RayCast(const Ray3<T> &ray) const
     result.hit = false;
  
   return result;
-}
-*/
+}*/
+
 }
