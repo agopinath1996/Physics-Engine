@@ -109,7 +109,7 @@ Body::Collider<T>* NSquared<T>::Pick(const MathCommon::Vector3<T>& point) const
   // no collider found
   return nullptr;
 }
-/*
+
 template<typename T>
 void NSquared<T>::Query(const Body::AABB<T> &aabb, Body::ColliderList<T> &out) const
 {
@@ -117,7 +117,7 @@ void NSquared<T>::Query(const Body::AABB<T> &aabb, Body::ColliderList<T> &out) c
     if (colliderAABB->Collides(aabb))
       out.push_back(colliderAABB->collider);
 }
-
+/*
 template<typename T>
 RayCastResult<T> NSquared<T>::RayCast(const Ray3<T> &ray) const
 {
