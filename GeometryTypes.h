@@ -1,4 +1,5 @@
 #pragma once
+#include <map>
 #include "CommonMathTypes.h"
 
 namespace Geometry
@@ -46,8 +47,7 @@ namespace Geometry
             , m_active(false)
             { }
         };
- 
-        template<typename T>
+
         struct Vertex
         {
             MathCommon::Vector3<T> m_position;
@@ -78,15 +78,15 @@ namespace Geometry
         };
         
         // Typedefs for memory management
-        typedef std::vector<Vertex<T>> VertList;
+        typedef std::vector<Vertex> VertList;
         typedef std::vector<HalfEdge> EdgeList;
         typedef std::vector<Face> FaceList;
         
         // Constructor
-        AdjacencyInfo() { Clear(); }
+        HalfEdgeMesh() { Clear(); }
         
         // operations
-        int AddVert(const Vec3 &position);
+        int AddVert(const MathCommon::Vector3<T> &position);
         void RemoveVert(int v);
         int AddFace(int v0, int v1, int v2);
         void RemoveFace(int f);
@@ -96,7 +96,7 @@ namespace Geometry
         int FindVertEdge(int v) const;
         
         // container for memory management
-        VertList<T> m_verts;
+        VertList m_verts;
         EdgeList m_edges;
         FaceList m_faces;
         

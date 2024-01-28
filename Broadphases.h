@@ -1,6 +1,7 @@
 #include<vector>
 #include "RigidBody.h"
 #include "CommonMathTypes.h"
+#include "GeometryTypes.h"
 
 namespace CollisionDetection
 {
@@ -38,7 +39,7 @@ class NSquared : public Broadphase<T>
 {
     private:
  
-    Body::AABBList<T> m_aabbs;
+    Geometry::AABBList<T> m_aabbs;
     Body::ColliderPairList<T> m_pairs;
 
   public:
@@ -67,13 +68,13 @@ Body::ColliderPairList<T> &NSquared<T>::ComputePairs(void)
   m_pairs.clear();
  
   // outer loop
-  typename Body::AABBList<T>::iterator i = m_aabbs.begin(); // These types are to complex
+  typename Geometry::AABBList<T>::iterator i = m_aabbs.begin(); // These types are to complex
   for (;i != m_aabbs.end(); ++i)
   {
     
     // inner loop
-    typename Body::AABBList<T>::iterator jStart = i;  // These types are to complex
-    typename Body::AABBList<T>::iterator j = ++jStart; // These types are to complex
+    typename Geometry::AABBList<T>::iterator jStart = i;  // These types are to complex
+    typename Geometry::AABBList<T>::iterator j = ++jStart; // These types are to complex
     for (; j != m_aabbs.end(); ++j)
     {
       Geometry::AABB<T> *aabbA = *i;

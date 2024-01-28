@@ -3,3 +3,4 @@
 #include "RigidBody.h"
 #include "Broadphases.h"
 #include "CSO.h"
+#include "GeometryTypes.h"

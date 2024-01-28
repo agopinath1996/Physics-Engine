@@ -3,6 +3,7 @@
 #include<list>
 #include<vector>
 #include "CommonMathTypes.h"
+#include "GeometryTypes.h"
 
 namespace Body
 {
@@ -20,8 +21,7 @@ namespace Body
         MathCommon::Vector3<T> m_localCentroid;
 
         // Geometrical properties
-        AABB<T> m_aabb;
-        MathCommon::Plane3D<T> m_surface_planes
+        Geometry::AABB<T> m_aabb;
 
     };
 
