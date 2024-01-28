@@ -2,7 +2,7 @@
 #include "RigidBody.h"
 #include "CommonMathTypes.h"
 
-namespace Collisions
+namespace CollisionDetection
 {
 
 template<typename T>
@@ -12,7 +12,7 @@ class Broadphase
   public:
    
     // adds a new AABB to the broadphase
-    virtual void Add(Body::AABB<T> *aabb) = 0;
+    virtual void Add(Geometry::AABB<T> *aabb) = 0;
  
     // updates broadphase to react to changes to AABB
     virtual void Update(void) = 0;
@@ -26,7 +26,7 @@ class Broadphase
  
     
     // with a query AABB
-    virtual void Query(const Body::AABB<T> &aabb, Body::ColliderList<T> &output) const = 0;
+    virtual void Query(const Geometry::AABB<T> &aabb, Body::ColliderList<T> &output) const = 0;
      
     // result contains the first collider the ray hits
     // result contains null if no collider is hit
@@ -43,7 +43,7 @@ class NSquared : public Broadphase<T>
 
   public:
      
-    virtual void Add(Body::AABB<T> *aabb)
+    virtual void Add(Geometry::AABB<T> *aabb)
     {
       m_aabbs.push_back(aabb);
     }
@@ -55,7 +55,7 @@ class NSquared : public Broadphase<T>
      
     virtual Body::ColliderPairList<T>& ComputePairs(void);
     virtual Body::Collider<T>* Pick(const MathCommon::Vector3<T> &point) const;
-    virtual void Query(const Body::AABB<T> &aabb, Body::ColliderList<T> &out) const;
+    virtual void Query(const Geometry::AABB<T> &aabb, Body::ColliderList<T> &out) const;
     virtual Body::RayCastResult<T> RayCast(const MathCommon::Ray3<T> &ray) const;
 
 };
@@ -76,8 +76,8 @@ Body::ColliderPairList<T> &NSquared<T>::ComputePairs(void)
     typename Body::AABBList<T>::iterator j = ++jStart; // These types are to complex
     for (; j != m_aabbs.end(); ++j)
     {
-      Body::AABB<T> *aabbA = *i;
-      Body::AABB<T> *aabbB = *j;
+      Geometry::AABB<T> *aabbA = *i;
+      Geometry::AABB<T> *aabbB = *j;
       Body::Collider<T> *colliderA = aabbA->Collider();
       Body::Collider<T> *colliderB = aabbB->Collider();
       Body::RigidBody<T> *bodyA = colliderA->Body();
@@ -102,7 +102,7 @@ template<typename T>
 Body::Collider<T>* NSquared<T>::Pick(const MathCommon::Vector3<T>& point) const
 {
 
-  for (Body::AABB<T> &aabb : m_aabbs)
+  for (Geometry::AABB<T> &aabb : m_aabbs)
     if (aabb->Contains(point))
       return aabb->collider; //Does Collider() modify m_aabbs?
  
@@ -111,9 +111,9 @@ Body::Collider<T>* NSquared<T>::Pick(const MathCommon::Vector3<T>& point) const
 }
 
 template<typename T>
-void NSquared<T>::Query(const Body::AABB<T> &aabb, Body::ColliderList<T> &out) const
+void NSquared<T>::Query(const Geometry::AABB<T> &aabb, Body::ColliderList<T> &out) const
 {
-  for (Body::AABB<T> &colliderAABB: m_aabbs)
+  for (Geometry::AABB<T> &colliderAABB: m_aabbs)
     if (colliderAABB->Collides(aabb))
       out.push_back(colliderAABB->collider);
 }
@@ -125,7 +125,7 @@ Body::RayCastResult<T> NSquared<T>::RayCast(const MathCommon::Ray3<T> &ray) cons
   Body::ColliderList<T> candidateList;
   candidateList.reserve(m_aabbs.size());
 
-  for (Body::AABB<T> &aabb : m_aabbs)
+  for (Geometry::AABB<T> &aabb : m_aabbs)
     if (aabb->TestRay(ray))
       candidateList.push_back(aabb->collider);
    

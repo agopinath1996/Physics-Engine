@@ -33,4 +33,15 @@ namespace MathCommon
         Vector3<T> pos;
         Vector3<T> dir;
     };
+
+    template<typename T>
+    struct Plane3D
+    {
+        /*Potential for improvement*/
+        Vector3<T> point;
+        Vector3<T> normal;
+    };
+
+    template<typename T>
+    using Surface3D = Eigen::Matrix<T,Eigen::Dynamic,Eigen::Dynamic>;
 }

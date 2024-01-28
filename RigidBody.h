@@ -7,23 +7,6 @@
 namespace Body
 {
     template<typename T>
-    struct AABB
-    {
-        MathCommon::Vector3<T> diagonal;
-
-        AABB(){};
-        AABB(const T& x_diff,const T& y_diff,const T& z_diff)
-        {
-        diagonal<<x_diff,y_diff,z_diff;
-        }
-        AABB(const T& x_min,const T& y_min,const T& z_min,const T& x_max,const T& y_max,const T& z_max)
-        {
-        diagonal<<(x_max-x_min),(y_max-y_min),(z_max-z_min);
-        }
-    };
-    template<typename T>
-    using AABBList = std::vector<AABB<T>*>;
-    template<typename T>
     struct Collider
     {
         /* 
@@ -32,11 +15,13 @@ namespace Body
 
         // Mechanical properties
         T m_mass;
+        /*Potential for improvement*/
         MathCommon::Matrix3<T> m_localInertiaTensor;
         MathCommon::Vector3<T> m_localCentroid;
 
         // Geometrical properties
         AABB<T> m_aabb;
+        MathCommon::Plane3D<T> m_surface_planes
 
     };
 
@@ -54,8 +39,7 @@ namespace Body
     {
         bool hit;
         Collider<T> *collider;
-        MathCommon::Vector3<T> position;
-        MathCommon::Vector3<T> normal;
+        MathCommon::Plane3D<T> surface_hit;
     };
 
     template <typename T>
@@ -67,8 +51,8 @@ namespace Body
 
         bool operator<(const ResultEntry &rhs) const
         {
-        // smaller t = closer
-        return t > rhs.t;
+            // smaller t = closer
+            return t > rhs.t;
         }
     };
 
@@ -86,6 +70,7 @@ namespace Body
         MathCommon::Vector3<T> m_localCentroid;
 
         // World Frame
+        /*Potential for improvement*/
         MathCommon::Vector3<T> m_position;  
         MathCommon::Matrix3<T> m_orientation;
         MathCommon::Matrix3<T> m_inverseOrientation;
