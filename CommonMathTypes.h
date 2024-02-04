@@ -6,6 +6,8 @@ This header file includes all the common datatypes and their shorthands used wit
 */
 namespace MathCommon
 {
+    extern const int EPSILON = 0.001;
+
     template<typename T>
     using Matrix3 = Eigen::Matrix<T,3,3>;
 

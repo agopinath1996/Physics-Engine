@@ -26,6 +26,7 @@ namespace Geometry
     template<typename T>
     struct HalfEdgeMesh
     {
+        // Half edge = edge in this implementation
         struct HalfEdge
         {
             int m_vertex; // pointed to by half edge
@@ -38,13 +39,13 @@ namespace Geometry
             
             //Constructor
             HalfEdge()
-            : m_vertex(-1)
-            , m_left_face(-1)
-            , m_next(-1)
-            , m_prev(-1)
-            , m_twin(-1)
-            , m_freeLink(-1)
-            , m_active(false)
+            : m_vertex(-1),
+            m_left_face(-1),
+            m_next(-1),
+            m_prev(-1),
+            m_twin(-1),
+            m_freeLink(-1),
+            m_active(false)
             { }
         };
 
@@ -57,9 +58,9 @@ namespace Geometry
 
             //Constructor
             Vertex()
-            : m_half_edge(-1)
-            , m_freeLink(-1)
-            , m_active(false)
+            : m_half_edge(-1),
+            m_freeLink(-1),
+            m_active(false)
             { }
         };
         
@@ -71,9 +72,9 @@ namespace Geometry
 
             //Constructor
             Face() 
-            : m_half_edge(-1)
-            , m_freeLink(-1)
-            , m_active(false)
+            : m_half_edge(-1),
+            m_freeLink(-1),
+            m_active(false)
             { }
         };
         
@@ -90,7 +91,7 @@ namespace Geometry
         void RemoveVert(int v);
         int AddFace(int v0, int v1, int v2);
         void RemoveFace(int f);
-        void Clear(void);
+        void Clear();
         
         // utils
         int FindVertEdge(int v) const;
@@ -109,10 +110,21 @@ namespace Geometry
         uint m_numVerts;
         uint m_numEdges;
         uint m_numFaces;
+        uint m_numBoundaryEdges;
         
         // edge records
         typedef std::pair<int, int> VertPair;
         typedef std::map<VertPair, int> EdgeMap;
         EdgeMap m_edgeMap;
     };
+
+    template <typename T, typename Container>
+    int Allocate(int &freeList, Container &container);
+
+    template <typename T, typename Container>
+    static void Free(int index, int &freeList, Container &container);
+
+    template <typename T>
+    const MathCommon::Vector3<T> Support(const HalfEdgeMesh<T> &mesh, const MathCommon::Vector3<T> &dir);
+
 }
