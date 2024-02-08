@@ -282,7 +282,7 @@ void Geometry::HalfEdgeMesh<T>::Clear()
 }
 
 template <typename T>
-const MathCommon::Vector3<T> Support(const Geometry::HalfEdgeMesh<T> &mesh, const MathCommon::Vector3<T> &dir)
+const MathCommon::Vector3<T> Support(const Geometry::HalfEdgeMesh<T> &mesh, const MathCommon::Vector3<T> &dir, const T& epsilon)
 {
   // grab adjacency information
   auto &adj = mesh;
@@ -310,7 +310,7 @@ const MathCommon::Vector3<T> Support(const Geometry::HalfEdgeMesh<T> &mesh, cons
       auto vert = &verts[vertIndex];
  
       const float dot = dir.dot(vert->m_position);
-      if (dot >= bestDot + MathCommon::EPSILON)
+      if (dot >= bestDot + epsilon)
       {
         // record new best vert
         bestVertIndex = bestVertIndex;

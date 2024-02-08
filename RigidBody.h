@@ -22,6 +22,8 @@ namespace Body
 
         // Geometrical properties
         Geometry::AABB<T> m_aabb;
+        
+        // TODO: Add support function
 
     };
 

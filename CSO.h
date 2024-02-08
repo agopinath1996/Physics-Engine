@@ -2,9 +2,9 @@
 #include "RigidBody.h"
 #include "CommonMathTypes.h"
 
-namespace CSO{
+namespace CollisionDetection{
     
-    //Functiin to dertermine if the CSO of two shapes contains the origin
+    //Function to give a support point to GJK algorithm
     template <typename T>
     void CSOSupport(const Body::Collider<T> &colliderA,
                     const Body::Collider<T> &colliderB,
@@ -29,6 +29,6 @@ namespace CSO{
         supportB = bodyB->LocalToGlobal(supportB);
 
         // compute CSO support point
-        support = supportA - supportB; 
+        support = supportA - supportB;
     }
 }

@@ -6,7 +6,12 @@ This header file includes all the common datatypes and their shorthands used wit
 */
 namespace MathCommon
 {
-    extern const int EPSILON = 0.001;
+    template<typename T>
+    extern const T EPSILON = T(0.0001);
+
+    // Too manu digits 
+    template<typename T>
+    extern const T PI = T(3.141592653589793238462643383279502884);
 
     template<typename T>
     using Matrix3 = Eigen::Matrix<T,3,3>;
@@ -42,6 +47,18 @@ namespace MathCommon
         /*Potential for improvement*/
         Vector3<T> point;
         Vector3<T> normal;
+    };
+
+    template<typename T>
+    struct Basis3D
+    {
+        Vector3<T> X;
+        Vector3<T> Y;
+        Vector3<T> Z;
+
+        Basis3D() = default;
+        Basis3D(Vector3<T> x, Vector3<T> y, Vector3<T> z) : X(x), Y(y), Z(z)
+        {}
     };
 
     template<typename T>

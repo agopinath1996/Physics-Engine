@@ -125,6 +125,6 @@ namespace Geometry
     static void Free(int index, int &freeList, Container &container);
 
     template <typename T>
-    const MathCommon::Vector3<T> Support(const HalfEdgeMesh<T> &mesh, const MathCommon::Vector3<T> &dir);
+    const MathCommon::Vector3<T> Support(const Geometry::HalfEdgeMesh<T> &mesh, const MathCommon::Vector3<T> &dir, const T& epsilon);
 
 }
