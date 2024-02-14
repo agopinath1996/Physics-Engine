@@ -14,14 +14,19 @@ namespace MathCommon
     extern const T PI = T(3.141592653589793238462643383279502884);
 
     template<typename T>
+    extern const T INF = Eigen::Infinity();
+
+    template<typename T>
     using Matrix3 = Eigen::Matrix<T,3,3>;
 
     template<typename T>
     using Matrix4 = Eigen::Matrix<T,4,4>;
 
+    // 3D vector
     template<typename T>
     using Vector3 = Eigen::Matrix<T,3,1>; //Column vector
 
+    // 4D vector
     template<typename T>
     using Vector4 = Eigen::Matrix<T,4,1>;
 
@@ -49,18 +54,38 @@ namespace MathCommon
         Vector3<T> normal;
     };
 
-    template<typename T>
+    // Breaking code style for readablility here
+    template<typename Type>
     struct Basis3D
     {
-        Vector3<T> X;
-        Vector3<T> Y;
-        Vector3<T> Z;
+        Vector3<Type> X;
+        Vector3<Type> Y;
+        Vector3<Type> Z;
+        Vector3<Type> T;
 
         Basis3D() = default;
-        Basis3D(Vector3<T> x, Vector3<T> y, Vector3<T> z) : X(x), Y(y), Z(z)
+        Basis3D(Vector3<Type> x, Vector3<Type> y, Vector3<Type> z) : X(x), Y(y), Z(z), T(Type(0.0),Type(0.0),Type(0.0))
         {}
     };
 
     template<typename T>
     using Surface3D = Eigen::Matrix<T,Eigen::Dynamic,Eigen::Dynamic>;
+
+    template<typename T>
+    MathCommon::Basis3D<T> BasisFromDirection(const MathCommon::Vector3<T>& direction)
+    {
+        // crreate a basis using the least significant component of a direction
+        //Amazing code originally in python but templated here for C++, Erin Catto @ https://box2d.org/
+        if (direction[0] >= T(0.57735))
+            MathCommon::Vector3<T> t1(direction[1], -direction[0], T(0.0));
+        else
+            MathCommon::Vector3<T> t1(T(0.0), direction[2], -direction[1]);
+    
+        //least significant component of a direction
+        t1.normalize();
+
+
+        t2 = (direction.cross(t1)).normalize();
+        return MathCommon::Basis3D<T>(direction,t1,t2);
+    }
 }

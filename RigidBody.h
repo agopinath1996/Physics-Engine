@@ -22,8 +22,26 @@ namespace Body
 
         // Geometrical properties
         Geometry::AABB<T> m_aabb;
+        Geometry::HalfEdgeMesh<T> m_surface;
         
-        // TODO: Add support function
+        MathCommon::Vector3<T> Support(const MathCommon::Vector3<T>& direction)
+        {
+            MathCommon::Vector3<T>  maxPoint;
+            T maxDistance = -MathCommon::INF;
+
+            // Brute force search on all the vertices
+            // TODO: Optimize this using sign of direction
+            for (MathCommon::Vector3<T>& vertex : m_surface.m_verts) 
+            {
+                T distance = vertex.dot(direction);
+                if (distance > maxDistance) {
+                    maxDistance = distance;
+                    maxPoint = vertex;
+                }
+            }
+            return maxPoint;
+        }
+        
 
     };
 

@@ -13,6 +13,7 @@ namespace CollisionDetection{
                     MathCommon::Vector3<T> &supportA, 
                     MathCommon::Vector3<T> &supportB)
     {
+        // TODO: Fix these two lines below
         const Body::RigidBody<T> *bodyA = colliderA.Surface();
         const Body::RigidBody<T> *bodyB = colliderB.Surface();
 
