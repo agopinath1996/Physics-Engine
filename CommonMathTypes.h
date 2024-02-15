@@ -14,7 +14,7 @@ namespace MathCommon
     extern const T PI = T(3.141592653589793238462643383279502884);
 
     template<typename T>
-    extern const T INF = Eigen::Infinity();
+    extern const T INF = Eigen::Infinity;
 
     template<typename T>
     using Matrix3 = Eigen::Matrix<T,3,3>;
@@ -76,10 +76,13 @@ namespace MathCommon
     {
         // crreate a basis using the least significant component of a direction
         //Amazing code originally in python but templated here for C++, Erin Catto @ https://box2d.org/
+
+        MathCommon::Vector3<T> t1,t2;
+
         if (direction[0] >= T(0.57735))
-            MathCommon::Vector3<T> t1(direction[1], -direction[0], T(0.0));
+            t1<<direction[1], -direction[0], T(0.0);
         else
-            MathCommon::Vector3<T> t1(T(0.0), direction[2], -direction[1]);
+            t1<<T(0.0), direction[2], -direction[1];
     
         //least significant component of a direction
         t1.normalize();

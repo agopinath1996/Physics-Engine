@@ -27,7 +27,7 @@ namespace Body
         MathCommon::Vector3<T> Support(const MathCommon::Vector3<T>& direction)
         {
             MathCommon::Vector3<T>  maxPoint;
-            T maxDistance = -MathCommon::INF;
+            T maxDistance = -MathCommon::INF<T>;
 
             // Brute force search on all the vertices
             // TODO: Optimize this using sign of direction

@@ -211,7 +211,7 @@ namespace Geometry
     
         MathCommon::Vector3<T> abc = ab.cross(ac);
     
-        if (SameDirection((abc.cross(ac)).cross(ao)) 
+        if (SameDirection((abc.cross(ac)).cross(ao)) )
         {
             if (SameDirection(ac, ao)) 
             {
